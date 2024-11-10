@@ -58,6 +58,7 @@ class tab1_gui(QWidget):
         self.go_button = QPushButton("Go")
         self.connect_signals()
         self.horizontal_vertical.addWidget(self.go_button)
+        self.required_notes :list
 
 
 
