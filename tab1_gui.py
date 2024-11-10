@@ -5,48 +5,60 @@ import os
 import pickle
 
 
-class Tab1Gui(QWidget):
+class tab1_gui(QWidget):
     note_on_signal = pyqtSignal(int, str)
     note_off_signal = pyqtSignal(int)
+
     def __init__(self):
         super().__init__()
 
-        self.labels , self.pixmap_item=  {},{}
+        self.labels, self.pixmap_item = {}, {}
         self.theorymode = None
 
         with open('theory.pkl', 'rb') as file:
             self.Theory = pickle.load(file)
-            print (self.Theory['Theory'])
+            print(self.Theory['Theory'])
 
         self.setLayout(QVBoxLayout())
         self.horizontal = QHBoxLayout()
         self.layout().addLayout(self.horizontal)
+
         self.theory1, self.theory2, self.theory3 = QListWidget(), QListWidget(), QListWidget()
-        for theory in [self.theory1, self.theory2, self.theory3]:self.horizontal.addWidget(theory, stretch=1)
-        self.theory1.addItems(["Notes", "Scales", "Triads", "Sevenths", "Modes", "Shells"    ])
+        for theory in [self.theory1, self.theory2, self.theory3]:
+            self.horizontal.addWidget(theory, stretch=1)
+
+        self.theory1.addItems(["Notes", "Scales", "Triads", "Sevenths", "Modes", "Shells"])
         self.theory2.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+
         self.Scene = QGraphicsScene()
         self.BackgroundPixmap = QPixmap("./Images/Piano/keys.png")
         self.BackgroundItem = QGraphicsPixmapItem(self.BackgroundPixmap)
         self.Scene.addItem(self.BackgroundItem)
+
         self.View = QGraphicsView(self.Scene)
         self.View.setFixedSize(self.BackgroundPixmap.size())
         self.View.setSceneRect(0, 0, self.BackgroundPixmap.width(), self.BackgroundPixmap.height())
         self.View.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.View.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.layout().addWidget(self.View)
+
         self.horizontal_vertical = QVBoxLayout()
         self.horizontal.addLayout(self.horizontal_vertical, 2)
 
-        self.go_button = QPushButton("Go")
-        self.connect_signals()
-        self.horizontal_vertical.addWidget(self.go_button)
-        for key in ['key_label', 'inversion_label', 'fingering_label', 'score_value']:
-            label = QLabel("")
+        for key, text in [('key_label', 'Key: C Major'),
+                          ('inversion_label', 'Inversion: Root'),
+                          ('fingering_label', 'Fingering: 1-2-3-4-5'),
+                          ('score_value', 'Score: 100')]:
+            label = QLabel(text)
             if key == 'key_label':
                 label.setFont(QFont("Arial", 32))
             self.labels[key] = label
             self.horizontal_vertical.addWidget(label)
+
+        self.go_button = QPushButton("Go")
+        self.connect_signals()
+        self.horizontal_vertical.addWidget(self.go_button)
+
 
 
     def theory1_clicked(self):
@@ -109,3 +121,4 @@ class Tab1Gui(QWidget):
         self.theory1.clicked.connect(self.theory1_clicked)
         self.theory2.clicked.connect(self.theory2_clicked)
         self.theory3.clicked.connect(self.theory3_clicked)
+        self.go_button.clicked.connect(self.go_button_clicked)
