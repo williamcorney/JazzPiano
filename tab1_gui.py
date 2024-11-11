@@ -59,6 +59,8 @@ class tab1_gui(QWidget):
         self.horizontal_vertical.addWidget(self.go_button)
         self.required_notes :list
 
+        self.go_button_clicked()
+
 
 
     def theory1_clicked(self):
