@@ -17,7 +17,6 @@ class tab1_gui(QWidget):
 
         with open('theory.pkl', 'rb') as file:
             self.Theory = pickle.load(file)
-            print(self.Theory['Theory'])
 
         self.setLayout(QVBoxLayout())
         self.horizontal = QHBoxLayout()

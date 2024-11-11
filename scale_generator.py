@@ -4,6 +4,8 @@ import random
 def generate_scale(scale_type, octaves, base_offset, random_order=False, descending=False, repeat_top_note=False, scale_index=None):
 
 
+
+
     # Define the intervals for each scale type
     scales_intervals = {
         "01": [2, 2, 1, 2, 2, 2, 1],  # Major
@@ -194,6 +196,9 @@ def generate_scale(scale_type, octaves, base_offset, random_order=False, descend
 
     current_note = start_note
     note_names.append(current_note)
+
+
+
     root_midi_values.append(current_note + base_offset)
     relative_midi_values.append(current_note)
 
@@ -202,6 +207,7 @@ def generate_scale(scale_type, octaves, base_offset, random_order=False, descend
         for interval in intervals:
             current_note += interval
             note_names.append(current_note)
+
             root_midi_values.append(current_note + base_offset)
             relative_midi_values.append(current_note)
 
